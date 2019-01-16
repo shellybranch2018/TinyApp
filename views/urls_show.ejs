@@ -9,14 +9,17 @@
    <h1></h1>
 <ul>
 	
-<li>Your short url is :<%= shortURL %></li>
+<li><h2>ShortURl :<%= shortURL %></h2></li>
  
 
- <li>Which comes from : <%= longURL %></li>
+ <li><form method="POST" action="/urls/:id" >
+    <input type="text" placeholder="<%= longURL %>"><button type="submit">EDIT</button>
+    
+    </form></li>
 
 
 </ul>
    
-    <a href="#">Shorten String</a>
+   
 
 </body>

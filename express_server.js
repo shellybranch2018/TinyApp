@@ -18,6 +18,23 @@ var alphaString = Math.random().toString(32).replace('0.', '');
 return alphaString.slice(0,6);
 }
 
+// Delete from database
+app.post("/urls/:id/delete", (req, res) => {
+  
+  //console.log(req.body)
+  let shortUrl = req.params.id; 
+//console.log(shortUrl)
+
+  delete urlDatabase[req.params.id];
+
+
+res.redirect("/urls/");
+});
+
+app.post("/urls/:id" ,() => {
+
+
+}); 
 
 app.get("/urls", (req, res) => {
   let templateVars = { urls: urlDatabase };
