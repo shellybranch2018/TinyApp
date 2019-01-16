@@ -5,6 +5,13 @@
 </head>
 <body>
 
-    <h1>Test</h1>
+    <h1><% urls %></h1>
+<ul>
+	<% for (var shortUrl in urls) { %>
+<li><%= shortUrl %> <%= urls[shortUrl]%></li>
+ <% } %>
+</ul>
+   
+    <a href="#">Shorten String</a>
 </body>
 </html>
