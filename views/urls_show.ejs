@@ -6,14 +6,14 @@
 <body>
 
     
-   <h1></h1>
+   <h1>where am i</h1>
 <ul>
 	
 <li><h2>ShortURl :<%= shortURL %></h2></li>
  
 
- <li><form method="POST" action="/urls/:id" >
-    <input type="text" placeholder="<%= longURL %>"><button type="submit">EDIT</button>
+ <li><form method="POST" action=<%="/urls/" +shortURL %>>
+    <input type="text" name="newlongURL" placeholder="<%= longURL %>"><br /><button type="submit">UPDATE</button>
     
     </form></li>
 

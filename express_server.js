@@ -1,10 +1,14 @@
 var express = require("express");
+var morgan  = require('morgan')
 var app = express();
 var PORT = 8080; // default port 8080
 app.set("view engine", "ejs");
 
+
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(morgan('dev'));
+
 
 var urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
@@ -30,11 +34,15 @@ app.post("/urls/:id/delete", (req, res) => {
 
 res.redirect("/urls/");
 });
+// This will update the URL
+app.post("/urls/:id", (req, res) => {
 
-app.post("/urls/:id" ,() => {
+   urlDatabase[req.params.id] = req.body.newlongURL;
+  res.redirect("/urls/");
+
+});
 
 
-}); 
 
 app.get("/urls", (req, res) => {
   let templateVars = { urls: urlDatabase };
@@ -81,7 +89,7 @@ app.post("/urls", (req, res) => {
   //console.log(urlDatabase);
   console.log(req.body);  // debug statement to see POST parameters
   //console.log("/urls/" + shortURL)
-  res.redirect("/urls/" + shortURL);
+  res.redirect("/urls/");
 
 });
 
