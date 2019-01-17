@@ -25,6 +25,13 @@ var alphaString = Math.random().toString(32).replace('0.', '');
 
 return alphaString.slice(0,6);
 }
+// Log out of session
+app.post("/logout", (req, res) => {
+  
+  res.clearCookie('username').redirect("/urls/");
+  //console.log(req.cookies.username)
+});
+
 
 // Sets the login cookie
 app.post("/login", (req, res) => {
