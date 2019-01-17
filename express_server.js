@@ -68,6 +68,9 @@ if(email === undefined || password === undefined){
 if(email === '' || password === ''){
   res.status(404).send("Error 404 - You must enter a Username and Password.");
 }
+if(users[email]){
+  res.status(404).send("Error 404 - You must enter a new password.");
+}
 else {res.redirect("/urls/");}
 
   });
