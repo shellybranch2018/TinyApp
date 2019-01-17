@@ -63,9 +63,10 @@ res.redirect("/urls/");
 
 //This gets the urls/new page
 app.get("/urls/new", (req, res) => {
+  let templateVars = {username: req.cookies["username"]}
   var shortURL = generateRandomString();
   var longURL = req.body.longURL;
-  res.render("urls_new");
+  res.render("urls_new", templateVars);
 });
 
 // When you hit the edit button you are taken to the indivual link page to make the edit
