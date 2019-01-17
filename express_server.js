@@ -46,45 +46,39 @@ app.post("/urls/:id/delete", (req, res) => {
 res.redirect("/urls/");
 });
 
-// This will update the URL
+// This post updates the url from the individual url page
 app.post("/urls/:id", (req, res) => {
 urlDatabase[req.params.id] = req.body.newlongURL;
-
-
 res.redirect("/urls/");
 });
 
+// This get take me to the urls page with the list
+ app.get("/urls", (req, res) => {
+  let templateVars = { urls: urlDatabase,
+    username: req.cookies["username"]
+  };
 
-
-app.get("/urls", (req, res) => {
-  let templateVars = { urls: urlDatabase, name:req.cookies[name] };
-  
   res.render("urls_index", templateVars);
 });
 
+//This gets the urls/new page
 app.get("/urls/new", (req, res) => {
   var shortURL = generateRandomString();
   var longURL = req.body.longURL;
   res.render("urls_new");
 });
 
+// When you hit the edit button you are taken to the indivual link page to make the edit
 app.get("/urls/:id", (req, res) => {
-
   let templateVars = { 
     shortURL: req.params.id,
     urls: urlDatabase,
-    longURL: urlDatabase[req.params.id],
-    
+    longURL: urlDatabase[req.params.id],  
     };
-
-//let templateVars = { urls: urlDatabase };
-  
-
-//console.log(postlongName + "test2")
-
   res.render("urls_show", templateVars);
 });
 
+// Come back and fix. This is suppose to redirect a user from the short url and open up the website of it longurl. 
 app.get("/u/:shortURL", (req, res) => {
 
 let longURL = urlDatabase[req.params.shortURL];
@@ -93,26 +87,30 @@ let longURL = urlDatabase[req.params.shortURL];
   res.redirect(longURL);
 });
 
-// This takes the full url and whatever is submitted is sent to the urls_show page.
+// This takes the full url and whatever is submitted is sent to the urls_show page and generating a random 
+// alphanumeric string for the short url
 
 app.post("/urls", (req, res) => {
   var shortURL = generateRandomString();
   var longURL = req.body.longURL;
 
   urlDatabase[shortURL] = longURL;
-  //console.log(urlDatabase);
-  console.log(req.body);  // debug statement to see POST parameters
-  //console.log("/urls/" + shortURL)
+
   res.redirect("/urls/");
 
 });
 
-
-
-
-
-
-
+// Port listening on localhost
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
+
+
+/*
+lecture code on cookies
+
+
+
+
+
+*/

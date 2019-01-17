@@ -12,7 +12,7 @@
 <li><h2>ShortURl :<%= shortURL %></h2></li>
  
 
- <li><form method="POST" action=<%="/login" +shortURL %>>
+ <li><form method="POST" action=<%="/urls/" +shortURL %>>
     <input type="text" name="newlongURL" placeholder="<%= longURL %>"><br /><button type="submit">UPDATE</button>
     
     </form></li>
