@@ -1,5 +1,6 @@
 var express = require("express");
-var morgan  = require('morgan')
+var morgan  = require('morgan');
+var cookieParser = require('cookie-parser')
 var app = express();
 var PORT = 8080; // default port 8080
 app.set("view engine", "ejs");
@@ -8,6 +9,9 @@ app.set("view engine", "ejs");
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(morgan('dev'));
+app.use(cookieParser())
+
+
 
 
 var urlDatabase = {
@@ -22,30 +26,39 @@ var alphaString = Math.random().toString(32).replace('0.', '');
 return alphaString.slice(0,6);
 }
 
+// Sets the login cookie
+app.post("/login", (req, res) => {
+  
+  let name = req.body.username;
+ 
+  res.cookie('username', name);
+ 
+  res.redirect("/urls/");
+});
+
 // Delete from database
 app.post("/urls/:id/delete", (req, res) => {
   
-  //console.log(req.body)
   let shortUrl = req.params.id; 
-//console.log(shortUrl)
 
   delete urlDatabase[req.params.id];
 
-
 res.redirect("/urls/");
 });
+
 // This will update the URL
 app.post("/urls/:id", (req, res) => {
+urlDatabase[req.params.id] = req.body.newlongURL;
 
-   urlDatabase[req.params.id] = req.body.newlongURL;
-  res.redirect("/urls/");
 
+res.redirect("/urls/");
 });
 
 
 
 app.get("/urls", (req, res) => {
-  let templateVars = { urls: urlDatabase };
+  let templateVars = { urls: urlDatabase, name:req.cookies[name] };
+  
   res.render("urls_index", templateVars);
 });
 
@@ -60,7 +73,8 @@ app.get("/urls/:id", (req, res) => {
   let templateVars = { 
     shortURL: req.params.id,
     urls: urlDatabase,
-    longURL: urlDatabase[req.params.id]
+    longURL: urlDatabase[req.params.id],
+    
     };
 
 //let templateVars = { urls: urlDatabase };
