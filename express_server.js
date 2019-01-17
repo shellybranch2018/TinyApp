@@ -73,7 +73,8 @@ app.get("/urls/:id", (req, res) => {
   let templateVars = { 
     shortURL: req.params.id,
     urls: urlDatabase,
-    longURL: urlDatabase[req.params.id],  
+    longURL: urlDatabase[req.params.id],
+    username: req.cookies["username"],  
     };
   res.render("urls_show", templateVars);
 });
@@ -109,7 +110,11 @@ app.listen(PORT, () => {
 /*
 lecture code on cookies
 
+app.get(,(req, res){
+res.cookie('test','hss');
+res.cookie('test','hss');
 
+})
 
 
 
