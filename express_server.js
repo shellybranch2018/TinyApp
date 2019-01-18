@@ -60,7 +60,7 @@ app.post("/register", (req, res) => {
   // do loop to find user
  for(let key in users){
    if( users[key].email === email){
-    res.status(400).send("Error 400 - The email you used already exist.");
+    res.status(403).send("Error 403 - The email you used already exist.");
    }
  }
     
@@ -132,7 +132,7 @@ res.redirect("/urls/");
  app.get("/urls", (req, res) => {
    let userId = req.cookies["user_id"];
   let templateVars = { urls: urlDatabase,
-    username: users.userRandomID.email
+    username: userId
   };
 
   res.render("urls_index", templateVars);

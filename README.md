@@ -1,9 +1,3 @@
 # TinyApp
 
 
-<% if (username === undefined ) { %>
-    <h4>You are not logged in.</h4>
-<% } else { %>
-<h4>You are logged in as: <%= username %></h4>
-<form method="POST" action="/logout"><button type="Submit">LOG OUT</button></form>
-<% } %>
