@@ -32,7 +32,7 @@ const users = {
   }
 }
 
-console.log(users)
+
 
 
 function generateRandomString() {
@@ -58,18 +58,19 @@ app.post("/register", (req, res) => {
   password: password };
 
 
-    res.cookie('email', email);
-    res.cookie('password', password);
-    res.cookie('id', userID);
+
+    // res.cookie('email', email);
+    // res.cookie('password', password);
+    res.cookie('user_id', userID);
     
 if(email === undefined || password === undefined){
-  res.status(404).send("Error 404 - You must enter a Username and Password.");
+  res.status(400).send("Error 400 - You must enter a Username and Password.");
 }
 if(email === '' || password === ''){
-  res.status(404).send("Error 404 - You must enter a Username and Password.");
+  res.status(400).send("Error 400 - You must enter a Username and Password.");
 }
 if(users[email]){
-  res.status(404).send("Error 404 - You must enter a new password.");
+  res.status(400).send("Error 400 - You must enter a new password.");
 }
 else {res.redirect("/urls/");}
 
@@ -78,7 +79,7 @@ else {res.redirect("/urls/");}
 // Log out of session
 app.post("/logout", (req, res) => {
   
-  res.clearCookie('username').redirect("/urls/");
+  res.clearCookie('user_id').redirect("/register");
   //console.log(req.cookies.username)
 });
 
@@ -114,8 +115,9 @@ res.redirect("/urls/");
 
 // This get take me to the urls page with the list
  app.get("/urls", (req, res) => {
+   let userId = req.cookies["user_id"];
   let templateVars = { urls: urlDatabase,
-    username: req.cookies["username"]
+    username: users[userId].email
   };
 
   res.render("urls_index", templateVars);
@@ -123,10 +125,11 @@ res.redirect("/urls/");
 
 //This gets the urls/new page
 app.get("/urls/new", (req, res) => {
-  let templateVars = {username: req.cookies["username"]}
+  let templateVars = {username: req.cookies["userID"]}
   var shortURL = generateRandomString();
   var longURL = req.body.longURL;
   res.render("urls_new", templateVars);
+  
 });
 
 
@@ -138,7 +141,7 @@ app.get("/urls/:id", (req, res) => {
     shortURL: req.params.id,
     urls: urlDatabase,
     longURL: urlDatabase[req.params.id],
-    username: req.cookies["username"],  
+    username: req.cookies["userID"],  
     };
   res.render("urls_show", templateVars);
 });
