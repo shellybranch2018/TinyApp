@@ -141,9 +141,6 @@ urlDatabase[req.params.id] = req.body.newlongURL;
 res.redirect("/urls/");
 });
 
-
-
-
 // This get take me to the urls page with the list
  app.get("/urls", (req, res) => {
    let userId = req.cookies["user_id"];
@@ -163,9 +160,6 @@ app.get("/urls/new", (req, res) => {
   res.render("urls_new", templateVars);
   
 });
-
-
-
 
 // When you hit the edit button you are taken to the indivual link page to make the edit
 app.get("/urls/:id", (req, res) => {
