@@ -53,43 +53,58 @@ app.post("/register", (req, res) => {
   let email = req.body.email
   let password = req.body.password
   let id = userID;
-  users[id] = { id: userID,
-  email: email,
-  password: password };
 
-
-
-    // res.cookie('email', email);
-    // res.cookie('password', password);
-    res.cookie('user_id', userID);
+   let foundUser = undefined;
+  const values = Object.values(users.userRandomID.email)
+  console.log(values)
+  // do loop to find user
+ for(let key in users){
+   if( users[key].email === email){
+    res.status(400).send("Error 400 - The email you used already exist.");
+   }
+ }
     
 if(email === undefined || password === undefined){
   res.status(400).send("Error 400 - You must enter a Username and Password.");
-}
-if(email === '' || password === ''){
+} else if(email === '' || password === ''){
   res.status(400).send("Error 400 - You must enter a Username and Password.");
-}
-if(users[email]){
+} else if(users[email]){ // I didn't find the user (+ If I found the user but the password didn't match)
   res.status(400).send("Error 400 - You must enter a new password.");
-}
-else {res.redirect("/urls/");}
+} else {
+  users[id] = { id: userID,
+    email: email,
+    password: password };
+  res.cookie('user_id', userID);
+
+  res.redirect("/urls/");}
 
   });
+
+// Login page 
+
+app.get("/login", (req, res) => {
+  const users = users[req.cookies.userID]
+  users.undefined.email
+  res.render('login');
+
+});
 
 // Log out of session
 app.post("/logout", (req, res) => {
   
   res.clearCookie('user_id').redirect("/register");
-  //console.log(req.cookies.username)
+  
 });
 
 
 // Sets the login cookie
 app.post("/login", (req, res) => {
-  
-  let name = req.body.username;
- 
-  res.cookie('username', name);
+  // users[id] = { id: userID,
+  //   email: email,
+  //   password: password };
+  const user = users[req.cookies.userID]
+  let singleUser = users[email];
+  res.cookie('users', singleUser);
  
   res.redirect("/urls/");
 });
@@ -117,7 +132,7 @@ res.redirect("/urls/");
  app.get("/urls", (req, res) => {
    let userId = req.cookies["user_id"];
   let templateVars = { urls: urlDatabase,
-    username: users[userId].email
+    username: users.userRandomID.email
   };
 
   res.render("urls_index", templateVars);
