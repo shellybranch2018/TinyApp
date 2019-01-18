@@ -55,14 +55,13 @@ app.post("/register", (req, res) => {
   let id = userID;
 
    let foundUser = undefined;
-  const values = Object.values(users.userRandomID.email)
-  console.log(values)
+  
   // do loop to find user
  for(let key in users){
    if( users[key].email === email){
     res.status(403).send("Error 403 - The email you used already exist.");
    }
- }
+ }  
     
 if(email === undefined || password === undefined){
   res.status(400).send("Error 400 - You must enter a Username and Password.");
@@ -83,8 +82,9 @@ if(email === undefined || password === undefined){
 // Login page 
 
 app.get("/login", (req, res) => {
-  const users = users[req.cookies.userID]
-  users.undefined.email
+  const data = users[req.cookies.userID];
+  
+  //users.id.email
   res.render('login');
 
 });
@@ -92,7 +92,7 @@ app.get("/login", (req, res) => {
 // Log out of session
 app.post("/logout", (req, res) => {
   
-  res.clearCookie('user_id').redirect("/register");
+  res.clearCookie('user_id').redirect("/login");
   
 });
 
@@ -102,11 +102,27 @@ app.post("/login", (req, res) => {
   // users[id] = { id: userID,
   //   email: email,
   //   password: password };
-  const user = users[req.cookies.userID]
-  let singleUser = users[email];
-  res.cookie('users', singleUser);
- 
-  res.redirect("/urls/");
+  const email = req.body.email;
+  const password = req.body.password;
+  var validUser = null;
+console.log(users)
+  for(let key in users){
+
+    if(email === users[key].email && password === users[key].password){
+    
+      validUser = users[key];
+      console.log(validUser)
+    }
+  } 
+    if(validUser){
+      res.cookie('user_id', validUser.id);
+      res.redirect("/urls");
+    } else if(!validUser){
+      res.status(400).send("Error 400 - Unable to log in.");
+
+    }
+   
+
 });
 
 // Delete from database
@@ -131,8 +147,9 @@ res.redirect("/urls/");
 // This get take me to the urls page with the list
  app.get("/urls", (req, res) => {
    let userId = req.cookies["user_id"];
+   let emailDisplay = users[userId].email;
   let templateVars = { urls: urlDatabase,
-    username: userId
+    username: emailDisplay
   };
 
   res.render("urls_index", templateVars);
