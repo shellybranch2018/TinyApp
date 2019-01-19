@@ -135,11 +135,22 @@ app.post("/login", (req, res) => {
 // Delete from database
 app.post("/urls/:id/delete", (req, res) => {
   
-  let shortUrl = req.params.id; 
+  let shortUrl = req.params.id;
+  let loggedIn = req.cookies['user_id']
+  let urlOwner = urlDatabase[shortUrl].userID
 
+  if(loggedIn === urlOwner){
   delete urlDatabase[req.params.id];
+  res.redirect("/urls/");
+ } else if(loggedIn != urlOwner){
+  res.status(400).send("Error 400 - Only the owner of this url is allowed to delete it.");
 
-res.redirect("/urls/");
+ }
+
+
+ 
+
+
 });
 
 // This post updates the url from the individual url page
@@ -155,6 +166,8 @@ app.get("/urls", (req, res) => {
  let templateVars = { urls: urlDatabase,
    username: emailDisplay
  };
+
+
 
  res.render("urls_index", templateVars);
 });
@@ -207,7 +220,7 @@ app.post("/urls", (req, res) => {
  // var longURL = urlDatabase;
   urlDatabase[shortURL] = {
     long: req.body.longURL ,
-    userID: shortURL
+    userID: req.cookies['user_id']
   };
 console.log(urlDatabase)
   res.redirect("/urls/");
