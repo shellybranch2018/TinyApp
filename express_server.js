@@ -39,7 +39,8 @@ const users = {
   }
 }
 
-
+console.log(urlDatabase)
+console.log(users)
 
 
 function generateRandomString() {
@@ -147,16 +148,22 @@ app.post("/urls/:id/delete", (req, res) => {
 
  }
 
-
- 
-
-
 });
 
 // This post updates the url from the individual url page
 app.post("/urls/:id", (req, res) => {
-urlDatabase[req.params.id] = req.body.newlongURL;
-res.redirect("/urls/");
+
+let urlOwner = urlDatabase[req.params.id].userID;
+let loggedIn = req.cookies['user_id']
+
+if(loggedIn === urlOwner){
+  urlDatabase[req.params.id].long = req.body.newlongURL;
+
+  res.redirect("/urls/");
+ } else if(loggedIn != urlOwner){
+  res.status(400).send("Error 400 - Only the owner of this url is allowed to edit it.");
+ } 
+
 });
 
 // This get take me to the urls page with the list
