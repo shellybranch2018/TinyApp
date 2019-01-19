@@ -15,8 +15,15 @@ app.use(cookieParser())
 
 
 var urlDatabase = {
-  "b2xVn2": "http://www.lighthouselabs.ca",
-  "9sm5xK": "http://www.google.com"
+  "b2xVn2": {
+    long: "http://www.lighthouselabs.ca",
+    userID: "userRandomID"
+  },
+  "9sm5xK": {
+    long: "http://www.google.com",
+    userID: "user2RandomID"
+  },
+  
 };
 
 const users = { 
@@ -48,11 +55,11 @@ app.get("/register", (req, res) => {
 });
 // captures users info and saves a cookie
 app.post("/register", (req, res) => {
-  let userID = generateRandomString();
+  let user_ID = generateRandomString();
   
   let email = req.body.email
   let password = req.body.password
-  let id = userID;
+  let id = user_ID;
 
    let foundUser = undefined;
   
@@ -70,10 +77,10 @@ if(email === undefined || password === undefined){
 } else if(users[email]){ // I didn't find the user (+ If I found the user but the password didn't match)
   res.status(400).send("Error 400 - You must enter a new password.");
 } else {
-  users[id] = { id: userID,
+  users[id] = { id: user_ID,
     email: email,
     password: password };
-  res.cookie('user_id', userID);
+  res.cookie('user_id', user_ID);
 
   res.redirect("/urls/");}
 
@@ -82,7 +89,7 @@ if(email === undefined || password === undefined){
 // Login page 
 
 app.get("/login", (req, res) => {
-  const data = users[req.cookies.userID];
+  const data = users[req.cookies.user_ID];
   
   //users.id.email
   res.render('login');
@@ -154,9 +161,10 @@ app.get("/urls", (req, res) => {
 
 //This gets the urls/new page
 app.get("/urls/new", (req, res) => {
-  let templateVars = {username: req.cookies["userID"]}
+  let templateVars = {username: req.cookies["user_ID"]}
   var shortURL = generateRandomString();
   var longURL = req.body.longURL;
+  
   
   
   let userId = req.cookies["user_id"];
@@ -179,7 +187,7 @@ app.get("/urls/:id", (req, res) => {
     shortURL: req.params.id,
     urls: urlDatabase,
     longURL: urlDatabase[req.params.id],
-    username: req.cookies["userID"],  
+    username: req.cookies["user_ID"],  
     };
   res.render("urls_show", templateVars);
 });
