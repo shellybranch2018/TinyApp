@@ -142,14 +142,14 @@ res.redirect("/urls/");
 });
 
 // This get take me to the urls page with the list
- app.get("/urls", (req, res) => {
-   let userId = req.cookies["user_id"];
-   let emailDisplay = users[userId].email;
-  let templateVars = { urls: urlDatabase,
-    username: emailDisplay
-  };
+app.get("/urls", (req, res) => {
+  let userId = req.cookies["user_id"];
+  let emailDisplay = users[userId].email;
+ let templateVars = { urls: urlDatabase,
+   username: emailDisplay
+ };
 
-  res.render("urls_index", templateVars);
+ res.render("urls_index", templateVars);
 });
 
 //This gets the urls/new page
