@@ -1,6 +1,7 @@
 var express = require("express");
 var morgan  = require('morgan');
 var cookieParser = require('cookie-parser')
+const bcrypt = require('bcrypt');
 var app = express();
 var PORT = 8080; // default port 8080
 app.set("view engine", "ejs");
@@ -10,7 +11,6 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(morgan('dev'));
 app.use(cookieParser())
-
 
 
 
@@ -59,10 +59,7 @@ app.post("/register", (req, res) => {
   
   let email = req.body.email
   let password = req.body.password
-  let id = user_ID;
-
-   let foundUser = undefined;
-  
+  let id = user_ID;  
   
  for(let key in users){
    if( users[key].email === email){
@@ -77,9 +74,12 @@ if(email === undefined || password === undefined){
 } else if(users[email]){ // I didn't find the user (+ If I found the user but the password didn't match)
   res.status(400).send("Error 400 - You must enter a new password.");
 } else {
+  const hashedPassword = bcrypt.hashSync(password, 10);
+
   users[id] = { id: user_ID,
     email: email,
-    password: password };
+    password: hashedPassword
+  };
   res.cookie('user_id', user_ID);
 
   res.redirect("/urls/");}
@@ -106,16 +106,14 @@ app.post("/logout", (req, res) => {
 
 // Sets the login cookie
 app.post("/login", (req, res) => {
-  // users[id] = { id: userID,
-  //   email: email,
-  //   password: password };
+ 
   const email = req.body.email;
   const password = req.body.password;
   var validUser = null;
   
   for(let key in users){
 
-    if(email === users[key].email && password === users[key].password){
+    if(email === users[key].email && bcrypt.compareSync(password, users[key].password)){
     
       validUser = users[key];
  
