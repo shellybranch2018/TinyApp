@@ -56,7 +56,7 @@ app.post("/register", (req, res) => {
 
    let foundUser = undefined;
   
-  // do loop to find user
+  
  for(let key in users){
    if( users[key].email === email){
     res.status(403).send("Error 403 - The email you used already exist.");
@@ -157,7 +157,19 @@ app.get("/urls/new", (req, res) => {
   let templateVars = {username: req.cookies["userID"]}
   var shortURL = generateRandomString();
   var longURL = req.body.longURL;
-  res.render("urls_new", templateVars);
+  
+  
+  let userId = req.cookies["user_id"];
+ 
+let validUser = userId;
+
+if(validUser === undefined){
+  res.redirect("/login")
+} else if (validUser){
+  res.render("urls_new", templateVars)
+}
+console.log(urlDatabase)
+
   
 });
 
