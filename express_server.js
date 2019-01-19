@@ -228,7 +228,7 @@ app.get("/urls/:id", (req, res) => {
 // Come back and fix. This is suppose to redirect a user from the short url and open up the website of it longurl. 
 app.get("/u/:shortURL", (req, res) => {
 
-let longURL = urlDatabase[req.params.shortURL];
+let longURL = urlDatabase[req.params.shortURL].long;
 
 
   res.redirect(longURL);
