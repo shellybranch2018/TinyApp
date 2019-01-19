@@ -112,13 +112,13 @@ app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   var validUser = null;
-console.log(users)
+  
   for(let key in users){
 
     if(email === users[key].email && password === users[key].password){
     
       validUser = users[key];
-      console.log(validUser)
+ 
     }
   } 
     if(validUser){
@@ -165,9 +165,7 @@ app.get("/urls/new", (req, res) => {
   var shortURL = generateRandomString();
   var longURL = req.body.longURL;
   
-  
-  
-  let userId = req.cookies["user_id"];
+let userId = req.cookies["user_id"];
  
 let validUser = userId;
 
@@ -206,10 +204,12 @@ let longURL = urlDatabase[req.params.shortURL];
 
 app.post("/urls", (req, res) => {
   var shortURL = generateRandomString();
-  var longURL = req.body.longURL;
-
-  urlDatabase[shortURL] = longURL;
-
+ // var longURL = urlDatabase;
+  urlDatabase[shortURL] = {
+    long: req.body.longURL ,
+    userID: shortURL
+  };
+console.log(urlDatabase)
   res.redirect("/urls/");
 
 });
