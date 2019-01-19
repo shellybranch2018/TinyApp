@@ -39,8 +39,7 @@ const users = {
   }
 }
 
-console.log(urlDatabase)
-console.log(users)
+
 
 
 function generateRandomString() {
@@ -166,15 +165,31 @@ if(loggedIn === urlOwner){
 
 });
 
+function urlsForUser(userID){
+  let foundInfo = {};
+  for(let key in urlDatabase){
+    let userIdForUrl = urlDatabase[key].userID;
+      
+    if(userIdForUrl === userID){ 
+      foundInfo[key] = {
+        userID: urlDatabase[key].userID,
+        long: urlDatabase[key].long
+      };
+    }
+  } 
+  return foundInfo;
+}
+
+
 // This get take me to the urls page with the list
 app.get("/urls", (req, res) => {
   let userId = req.cookies["user_id"];
   let emailDisplay = users[userId].email;
- let templateVars = { urls: urlDatabase,
-   username: emailDisplay
- };
-
-
+  let templateVars = {
+    
+    username: emailDisplay,
+    urls: urlsForUser(userId)
+  };
 
  res.render("urls_index", templateVars);
 });
