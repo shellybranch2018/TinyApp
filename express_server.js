@@ -171,7 +171,7 @@ if(loggedIn === urlOwner){
  } 
 
 });
-
+// Helper function checking user ids 
 function urlsForUser(userID){
   let foundInfo = {};
   for(let key in urlDatabase){
