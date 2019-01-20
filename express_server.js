@@ -1,8 +1,8 @@
 var express = require("express");
 var morgan  = require('morgan');
-var cookieParser = require('cookie-parser')
+var cookieParser = require('cookie-parser');
 const bcrypt = require('bcrypt');
-var cookieSession = require('cookie-session')
+var cookieSession = require('cookie-session');
 var app = express();
 var PORT = 8080; // default port 8080
 app.set("view engine", "ejs");
@@ -12,14 +12,13 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(morgan('dev'));
 app.use(cookieParser());
-
 app.use(cookieSession({
   name: 'session',
   keys: ['dj khaled we da bes'],
  
   // Cookie Options
   maxAge: 24 * 60 * 60 * 1000 // 24 hours
-}))
+}));
 
 
 var urlDatabase = {
@@ -45,7 +44,7 @@ const users = {
     email: "user2@example.com", 
     password: "dishwasher-funk"
   }
-}
+};
 
 
 function generateRandomString() {
@@ -63,8 +62,8 @@ app.get("/register", (req, res) => {
 app.post("/register", (req, res) => {
   let user_ID = generateRandomString();
   
-  let email = req.body.email
-  let password = req.body.password
+  let email = req.body.email;
+  let password = req.body.password;
   let id = user_ID;  
   
  for(let key in users){
@@ -97,7 +96,7 @@ if(email === undefined || password === undefined){
 
 app.get("/login", (req, res) => {
   
-  const data = users[req.session.userID]
+  const data = users[req.session.userID];
   
   
   //users.id.email
@@ -145,7 +144,7 @@ app.post("/urls/:id/delete", (req, res) => {
   
   let shortUrl = req.params.id;
   let loggedIn = req.session.user_id;
-  let urlOwner = urlDatabase[shortUrl].userID
+  let urlOwner = urlDatabase[shortUrl].userID;
 
   if(loggedIn === urlOwner){
   delete urlDatabase[req.params.id];
@@ -204,7 +203,7 @@ app.get("/urls", (req, res) => {
 
 //This gets the urls/new page
 app.get("/urls/new", (req, res) => {
-  let templateVars = {username: req.session.user_id}
+  let templateVars = {username: req.session.user_id};
   var shortURL = generateRandomString();
   var longURL = req.body.longURL;
   
@@ -213,11 +212,10 @@ let userId = req.session.user_id;
 let validUser = userId;
 
 if(validUser === undefined){
-  res.redirect("/login")
+  res.redirect("/login");
 } else if (validUser){
-  res.render("urls_new", templateVars)
+  res.render("urls_new", templateVars);
 }
-console.log(urlDatabase)
 
   
 });
@@ -252,7 +250,7 @@ app.post("/urls", (req, res) => {
     long: req.body.longURL ,
     userID: req.session.user_id
   };
-console.log(urlDatabase)
+console.log(urlDatabase);
   res.redirect("/urls/");
 
 });

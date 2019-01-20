@@ -7,22 +7,29 @@
 </head>
 
 
-<body>
-<div class="container">
-<h1>TinyApp - Register</h1>
+<body style="padding:20px">
+<h1 style="text-align:center">TinyApp - Register</h1>
+<div class="container" style="max-width:360px; margin:40px auto;">
+
 
 <form method="POST" action="/register">
   <div class="form-group">
     <label for="exampleInputEmail1">Email address</label>
-    <input type="email" name="email" placeholder="Email" id="exampleInputEmail1">
+    <input type="email" name="email" placeholder="Email" id="exampleInputEmail1" style="width:100%">
     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
   </div>
   <div class="form-group">
     <label for="exampleInputPassword1">Password</label>
-    <input type="password" name="password" placeholder="Password" id="exampleInputPassword1">
+    <input type="password" name="password" placeholder="Password" id="exampleInputPassword1" style="width:100%">
   </div>
   
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+<h3>Welcome to TinyApp</h3>
+<p>Do you have a URL that is too long and complicated to send? <br />
+You are in the right place. Simply enter you URL and we will give you a short URL to send out to your
+friends and collegues.</p>
 </div>
 </body>
+
