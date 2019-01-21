@@ -1,0 +1,21 @@
+body {padding: 50px; font-size: 20px}
+hr {border-bottom: 1px solid}
+.update-ul {width:100%; max-width:600px; margin:auto}
+.update-ul li { width: 100%}
+.page-header {text-align:center}
+.enter-url-body { padding-top:20px; padding-top:20px; border-top: 1px solid #ccc; margin-top:30px;}
+/*Login page styles*/
+.container-login {max-width:360px; margin:40px auto;}
+
+/*Register page styles*/
+.container-register {max-width:360px; margin:40px auto;}
+
+/*URL List page*/
+.form-style {max-width:500px; margin:auto; text-align:center}
+.container-url-list {padding-top:20px; padding-top:20px; margin-top:30px; max-width:815px; margin:auto; float:none}
+.edit-box {float:right; position:relative; left:73px; top:15px}
+.edit-box li {float:left; padding-right: 20px; list-style:none}
+.container-url-list p { text-align: center}
+.enter-url {text-align: center}
+.enter-url a {display: block;padding: 20px;color: #fff;background: rgb(30,144,255);font-weight: normal;letter-spacing: 14px;}
+.enter-url a:hover { text-decoration: none; background: rgba(30,144,255,0.7); color:#007bff;}

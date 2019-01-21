@@ -5,21 +5,21 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-<style type="text/css">
-ul li {width:100%}
-</style>
+<link rel="stylesheet" href="styles.css" >
+
+
     <% include ./partials/_header %>
 
 </head>
 <body style="padding:40px">
 <hr />
-<div style="padding-top:20px">
+<div class="container-update">
     
-   <h1 style="text-align:center">Tiny App - Update you URL</h1>
+   <h1 class="page-header">Tiny App - Update you URL</h1>
    <p align="center"><em>You must add "http://" or "https//" to the front of your URL.</em></p>
 
    <div class="input-group mb-3">
-<ul style="width:100%; max-width:600px; margin:auto">
+<ul class="update-ul">
 	
 <li><h2>ShortURl :<%= shortURL %></h2></li>
  

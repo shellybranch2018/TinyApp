@@ -6,7 +6,7 @@ var cookieSession = require('cookie-session');
 var app = express();
 var PORT = 8080; // default port 8080
 app.set("view engine", "ejs");
-
+app.use(express.static(__dirname + '/public'));
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
